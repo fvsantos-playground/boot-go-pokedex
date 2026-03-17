@@ -16,6 +16,15 @@ func main() {
 		if len(words) == 0 {
 			continue
 		}
-		fmt.Println("Your command was:", words[1])
+		command := words[0]
+		cliCommand, ok := cliCommandMap[command]
+		if !ok {
+			fmt.Println("Unknown command")
+			continue
+		}
+		err := cliCommand.callback()
+		if err != nil {
+			fmt.Println("Error executing command:", err)
+		}
 	}
 }
