@@ -22,7 +22,7 @@ func main() {
 			fmt.Println("Unknown command")
 			continue
 		}
-		err := cliCommand.callback()
+		err := cliCommand.callback(cliCommand.config)
 		if err != nil {
 			fmt.Println("Error executing command:", err)
 		}
