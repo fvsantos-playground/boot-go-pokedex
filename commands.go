@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/fvsantos-playground/boot-go-pokedex/pokeapi"
+	"github.com/fvsantos-playground/boot-go-pokedex/internal/pokeapi"
 )
 
 type cliCommand struct {

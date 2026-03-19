@@ -4,9 +4,16 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"time"
+
+	"github.com/fvsantos-playground/boot-go-pokedex/internal/pokeapi"
+	"github.com/fvsantos-playground/boot-go-pokedex/internal/pokecache"
 )
 
 func main() {
+	cache := pokecache.NewCache(time.Second * 10)
+	pokeapi.SetCache(cache)
+
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
 		fmt.Print("Pokedex > ")
