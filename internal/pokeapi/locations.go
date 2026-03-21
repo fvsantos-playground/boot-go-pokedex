@@ -1,8 +1,6 @@
 package pokeapi
 
 import (
-	"bytes"
-	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
@@ -29,23 +27,12 @@ func SetCache(c pokecache.Cache) {
 }
 
 func GetLocations(locationURL string) (PaginationData, error) {
-	getDecodedData := func(val []byte) (PaginationData, error) {
-		var data PaginationData
-		decoder := json.NewDecoder(bytes.NewReader(val))
-		if err := decoder.Decode(&data); err != nil {
-			fmt.Println(err)
-			return PaginationData{}, err
-		}
-
-		return data, nil
-	}
-
 	if len(locationURL) == 0 {
-		locationURL = "https://pokeapi.co/api/v2/location-area?offset=0&limit=20"
+		locationURL = LocationURL + "?offset=0&limit=20"
 	}
 
 	if val, ok := cache.Get(locationURL); ok {
-		return getDecodedData(val)
+		return getData[PaginationData](val)
 	}
 
 	res, err := http.Get(locationURL)
@@ -62,5 +49,5 @@ func GetLocations(locationURL string) (PaginationData, error) {
 	}
 
 	cache.Add(locationURL, bytes)
-	return getDecodedData(bytes)
+	return getData[PaginationData](bytes)
 }

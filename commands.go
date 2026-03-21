@@ -4,22 +4,18 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/fvsantos-playground/boot-go-pokedex/internal/commands"
 	"github.com/fvsantos-playground/boot-go-pokedex/internal/pokeapi"
 )
 
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(config *Config) error
-	config      *Config
+	callback    func(config *pokeapi.Config) error
+	config      *pokeapi.Config
 }
 
-type Config struct {
-	Next     string
-	Previous string
-}
-
-var locationConfig *Config = &Config{}
+var locationConfig *pokeapi.Config = &pokeapi.Config{}
 
 var cliCommandMap = map[string]cliCommand{
 	"map": {
@@ -34,28 +30,34 @@ var cliCommandMap = map[string]cliCommand{
 		callback:    commandMapB,
 		config:      locationConfig,
 	},
+	"explore": {
+		name:        "explore",
+		description: "",
+		callback:    commands.Explore,
+		config:      locationConfig,
+	},
 	"exit": {
 		name:        "exit",
 		description: "Exit the Pokedex",
 		callback:    commandExit,
-		config:      &Config{},
+		config:      &pokeapi.Config{},
 	},
 	"help": {
 		name:        "help",
 		description: "Show help message",
 		callback:    commandHelp,
-		config:      &Config{},
+		config:      &pokeapi.Config{},
 	},
 }
 
-func printLocationData(config *Config, data pokeapi.PaginationData) {
+func printLocationData(config *pokeapi.Config, data pokeapi.PaginationData) {
 	config.Next, config.Previous = data.Next, data.Previous
 	for _, location := range data.Results {
 		fmt.Println(location.Name)
 	}
 }
 
-func commandMap(config *Config) error {
+func commandMap(config *pokeapi.Config) error {
 	if len(config.Previous) != 0 && len(config.Next) == 0 {
 		fmt.Println("You have reached the last page")
 		return nil
@@ -70,7 +72,7 @@ func commandMap(config *Config) error {
 	return nil
 }
 
-func commandMapB(config *Config) error {
+func commandMapB(config *pokeapi.Config) error {
 	if len(config.Previous) == 0 {
 		fmt.Println("you're on the first page")
 		return nil
@@ -85,7 +87,7 @@ func commandMapB(config *Config) error {
 	return nil
 }
 
-func commandHelp(config *Config) error {
+func commandHelp(config *pokeapi.Config) error {
 	fmt.Println(`
 Welcome to the Pokedex!
 Usage:
@@ -95,7 +97,7 @@ exit: Exit the Pokedex`)
 	return nil
 }
 
-func commandExit(config *Config) error {
+func commandExit(config *pokeapi.Config) error {
 	fmt.Println("Closing the Pokedex... Goodbye!")
 	os.Exit(0)
 	return nil

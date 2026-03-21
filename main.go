@@ -29,6 +29,11 @@ func main() {
 			fmt.Println("Unknown command")
 			continue
 		}
+
+		if len(words) > 1 {
+			cliCommand.config.Param = words[1]
+		}
+
 		err := cliCommand.callback(cliCommand.config)
 		if err != nil {
 			fmt.Println("Error executing command:", err)
