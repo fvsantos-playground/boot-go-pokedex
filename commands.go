@@ -42,6 +42,12 @@ var cliCommandMap = map[string]cliCommand{
 		callback:    commands.Catch,
 		config:      apiConfig,
 	},
+	"inspect": {
+		name:        "inspect",
+		description: "",
+		callback:    commands.Inspect,
+		config:      apiConfig,
+	},
 	"exit": {
 		name:        "exit",
 		description: "Exit the Pokedex",

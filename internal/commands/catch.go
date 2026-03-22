@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/fvsantos-playground/boot-go-pokedex/internal/pokeapi"
+	"github.com/fvsantos-playground/boot-go-pokedex/internal/pokemon"
 )
 
 func Catch(config *pokeapi.Config) error {
@@ -23,6 +24,7 @@ func Catch(config *pokeapi.Config) error {
 
 	if rand.Intn(int(baseCatchRate)) == 0 {
 		fmt.Printf("%s was caught!\n", config.Param)
+		pokemon.Add(config.Param, data)
 	} else {
 		fmt.Printf("%s escaped!\n", config.Param)
 	}
