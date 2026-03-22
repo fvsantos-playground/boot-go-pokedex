@@ -22,8 +22,9 @@ func Catch(config *pokeapi.Config) error {
 
 	baseCatchRate := math.Ceil(float64(data.BaseExperience / 50))
 
-	if rand.Intn(int(baseCatchRate)) == 0 {
+	if baseCatchRate == 0 || rand.Intn(int(baseCatchRate)) == 0 {
 		fmt.Printf("%s was caught!\n", config.Param)
+		fmt.Println("You may now inspect it with the inspect command.")
 		pokemon.Add(config.Param, data)
 	} else {
 		fmt.Printf("%s escaped!\n", config.Param)

@@ -1,6 +1,8 @@
 package pokemon
 
 import (
+	"iter"
+	"maps"
 	"sync"
 
 	"github.com/fvsantos-playground/boot-go-pokedex/internal/pokeapi"
@@ -26,4 +28,8 @@ func Get(name string) (pokemon pokeapi.PokemonInfo, exists bool) {
 	}
 
 	return val, true
+}
+
+func GetNames() iter.Seq[string] {
+	return maps.Keys(inventory)
 }
