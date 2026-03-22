@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	cache := pokecache.NewCache(time.Second * 10)
+	cache := pokecache.NewCache(time.Minute * 5)
 	pokeapi.SetCache(cache)
 
 	scanner := bufio.NewScanner(os.Stdin)

@@ -15,26 +15,32 @@ type cliCommand struct {
 	config      *pokeapi.Config
 }
 
-var locationConfig *pokeapi.Config = &pokeapi.Config{}
+var apiConfig *pokeapi.Config = &pokeapi.Config{}
 
 var cliCommandMap = map[string]cliCommand{
 	"map": {
 		name:        "map",
 		description: "",
 		callback:    commandMap,
-		config:      locationConfig,
+		config:      apiConfig,
 	},
 	"mapb": {
 		name:        "mapb",
 		description: "",
 		callback:    commandMapB,
-		config:      locationConfig,
+		config:      apiConfig,
 	},
 	"explore": {
 		name:        "explore",
 		description: "",
 		callback:    commands.Explore,
-		config:      locationConfig,
+		config:      apiConfig,
+	},
+	"catch": {
+		name:        "catch",
+		description: "",
+		callback:    commands.Catch,
+		config:      apiConfig,
 	},
 	"exit": {
 		name:        "exit",
